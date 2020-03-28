@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-deployment
+  name: httpdhealth
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: helloworld
+      service: httpd-health
   template:
     metadata:
       labels:
-        app: helloworld
+        service: httpd-health
     spec:
       containers:
-      - name: k8s-demo
-        image: wardviaene/k8s-demo
+      - name: webserver
+        image: httpd
         ports:
         - name: nodejs-port
-          containerPort: 3000
+          containerPort: 80
         livenessProbe:
           httpGet:
             path: /
