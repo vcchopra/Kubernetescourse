@@ -1,20 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-deployment
+  name: nginx-dep-secret
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: helloworld
+      app: nginx-secret
   template:
     metadata:
       labels:
-        app: helloworld
+        app: nginx-secret
     spec:
       containers:
-      - name: k8s-demo
-        image: wardviaene/k8s-demo
+      - name: nginx-pod-secret
+        image: shahanawaj/nginx
         ports:
-        - name: nodejs-port
-          containerPort: 3000
+        - name: ng-secret-port
+          containerPort: 80
+        env:  #set env variable
+        - name: mysecret  # name of variable to set
+          valueFrom:  # need value for this variable
+            secretKeyRef:  # we are taking value from secrte
+              name: secretvin # secret name to fetch value from 
+              key: username.txt  # field from secrte like username or password or db_name or java_home path
+        - name: mysecretpass
+          valueFrom:
+            secretKeyRef:
+              name: secretvin
+              key: password.txt
+      imagePullSecrets:
+      - name: dockersecret

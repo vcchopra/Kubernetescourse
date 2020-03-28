@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: helloworld-service
+  name: nginx-service
 spec:
   ports:
-  - port: 80
-    targetPort: nodejs-port
+  - port: 8080
+    targetPort: nginx
     protocol: TCP
   selector:
-    app: helloworld
-  type: LoadBalancer
+    app: nginxweb
+  type: NodePort
